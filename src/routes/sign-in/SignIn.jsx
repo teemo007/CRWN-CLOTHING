@@ -7,6 +7,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import { getRedirectResult } from "firebase/auth";
 import SignUp from "../../components/sign-up-form/SignUp";
+import Button from "../../components/button/button.component";
 
 const SignIn = () => {
   
@@ -35,12 +36,13 @@ const SignIn = () => {
   //   };
   return (
     <div>
-      <button onClick={logGoolgeUser}>
+      {/* <button onClick={logGoolgeUser}>
         <h1>Sign in with Google Popup</h1>
-      </button>
-      <button onClick={signInWithGoogleRedirect}>
+      </button> */}
+      <Button buttonType="google" onClick={signInWithGoogleRedirect}>Sign in with Google</Button>
+      {/* <button onClick={signInWithGoogleRedirect}>
         <h1>Sign in with Google Redirect</h1>
-      </button>
+      </button> */}
       <SignUp />
     </div>
   );

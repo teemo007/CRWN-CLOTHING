@@ -13,6 +13,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "../form-input/FormInput";
+import Button from "../button/button.component";
 
 const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -48,8 +49,9 @@ const SignUp = () => {
     setFormFields({ ...formFields, [name]: value });
   };
   return (
-    <div>
-      <h1>Sign Up with your email and password</h1>
+    <div className="sign-up-container">
+      <h2>Dont't have an account?</h2>
+      <span>Sign Up with your email and password</span>
       <form action="." onSubmit={handleSubmit}>
         <FormInput
           label="Display Name"
@@ -98,7 +100,7 @@ const SignUp = () => {
             value: confirmPassword,
           }}
         />
-        <button type="submit">Sign Up</button>
+        <Button >SIGN UP</Button>
       </form>
     </div>
   );
