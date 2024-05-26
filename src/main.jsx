@@ -5,7 +5,7 @@ import "./index.scss";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Navigation from "./routes/navigation/Navigation.jsx";
-import SignIn from "./routes/sign-in/SignIn.jsx";
+import Authentication from "./routes/authentication/Authentication.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <App /> },
-      { path: "/sign-in", element: <SignIn /> },
+      { path: "/auth", element: <Authentication /> },
   ],
   },
 ]);
