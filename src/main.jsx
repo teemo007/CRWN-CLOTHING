@@ -6,19 +6,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Navigation from "./routes/navigation/Navigation.jsx";
 import Authentication from "./routes/authentication/Authentication.jsx";
+import { UserProvider } from "./contexts/user.context.jsx";
 
 const router = createBrowserRouter([
   {
     element: (
       <>
-        <Navigation />
-        <Outlet />
+        <UserProvider>
+          <Navigation />
+          <Outlet />
+        </UserProvider>
       </>
     ),
     children: [
       { path: "/", element: <App /> },
       { path: "/auth", element: <Authentication /> },
-  ],
+    ],
   },
 ]);
 
