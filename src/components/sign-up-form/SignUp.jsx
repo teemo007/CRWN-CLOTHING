@@ -14,13 +14,12 @@ import {
 
 import FormInput from "../form-input/FormInput";
 import Button from "../button/button.component";
-import { UserContext } from "../../contexts/user.context";
 
 const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  const {setCurrentUser} = useContext(UserContext)
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +33,7 @@ const SignUp = () => {
         email,
         password
       );
-      setCurrentUser(user)
+      
       await createUserDocumentFromAuth(user, { displayName });
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {

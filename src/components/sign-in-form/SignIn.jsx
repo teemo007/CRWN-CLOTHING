@@ -7,7 +7,7 @@ import {
   createUserDocumentFromAuth,
   signInAuathWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
-import { UserContext } from "../../contexts/user.context";
+//import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
   email: "",
@@ -17,11 +17,11 @@ const defaultFormFields = {
 const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const {setCurrentUser} = useContext(UserContext)
+  //const {setCurrentUser} = useContext(UserContext)
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
+    
   };
 
   const handleChange = (e) => {
@@ -33,7 +33,7 @@ const SignIn = () => {
     e.preventDefault();
     try {
       const { user } = await signInAuathWithEmailAndPassword(email, password);
-      setCurrentUser(user)
+      //setCurrentUser(user)
       setFormFields(defaultFormFields);
     } catch (error) {
       console.log(error.message);
@@ -42,7 +42,7 @@ const SignIn = () => {
 
   return (
     <div className="sign-in-container">
-      <h2>already have an account?</h2>
+      <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
@@ -51,9 +51,10 @@ const SignIn = () => {
             type: "email",
             id: "signInEmail",
             name: "email",
-            require: "true",
+            required: true,
             value: email,
             onChange: handleChange,
+            
           }}
         />
         <FormInput
@@ -62,7 +63,7 @@ const SignIn = () => {
             type: "password",
             id: "signInPassword",
             name: "password",
-            require: "true",
+            required: true,
             value: password,
             onChange: handleChange,
           }}
