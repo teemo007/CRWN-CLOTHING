@@ -1,0 +1,29 @@
+.products-container{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap:10px;
+    row-gap: 50px;
+    transition: all 1s ease;
+    transition-duration: 1s;
+    transition-delay: 2s;
+}
+
+$breakpoint-tabet:600px; /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+$breakpoint-portrait-tabet:801px; /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+$breakpoint-hi-res:1281px; /* hi-res laptops and desktops  */
+
+@media (min-width:$breakpoint-tabet) {
+    .products-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width:$breakpoint-portrait-tabet) {
+    .products-container{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width:$breakpoint-hi-res) {
+    .products-container{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
