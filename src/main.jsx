@@ -7,7 +7,8 @@ import { Outlet } from "react-router-dom";
 import Navigation from "./routes/navigation/Navigation.jsx";
 import Authentication from "./routes/authentication/Authentication.jsx";
 import { UserProvider } from "./contexts/user.context.jsx";
-import { ShopProvider } from "./contexts/shop.context.jsx";
+import { ProductsProvider } from "./contexts/shop.context.jsx";
+import { CartProvider } from "./contexts/cart.context.jsx";
 import Shop from "./routes/shop/Shop.jsx";
 
 const router = createBrowserRouter([
@@ -15,10 +16,12 @@ const router = createBrowserRouter([
     element: (
       <>
         <UserProvider>
-          <ShopProvider>
-          <Navigation />
-          <Outlet />
-          </ShopProvider>
+          <ProductsProvider>
+            <CartProvider>
+              <Navigation />
+              <Outlet />
+            </CartProvider>
+          </ProductsProvider>
         </UserProvider>
       </>
     ),
