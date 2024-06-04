@@ -38,6 +38,13 @@ const deleteCartItem = (cartItems, productToDelete) => {
   return cartItems.filter((cartItem) => cartItem.id !== productToDelete.id);
 };
 const updateItemQuantity = (cartItems, id, productQuantityToUpdate) => {
+  console.log(typeof(productQuantityToUpdate))
+  const existingCartItem = cartItems.find(
+    (product) => product.id === id
+  );
+  if (existingCartItem && productQuantityToUpdate === 0) {
+    return cartItems.filter((cartItem) => cartItem.id !== id);
+  }
   return cartItems.map((cartItem) =>
     cartItem.id === id
       ? { ...cartItem, quantity: productQuantityToUpdate }
@@ -47,7 +54,6 @@ const updateItemQuantity = (cartItems, id, productQuantityToUpdate) => {
 
 export const CartContext = createContext({
   isCartOpen: false,
-  isItemEditable: [],
   setIsCartopen: () => {},
   cartItem: [],
   addItemToCart: () => {},
@@ -55,6 +61,9 @@ export const CartContext = createContext({
   removeItemFromCart: () => {},
   deleteItemFromCart: () => {},
   cartTotal: 0,
+  isItemEditable: {},
+  setIsItemEditable: () => {},
+  updateItemQuantityFromCart: ()=> {},
 });
 
 export const CartProvider = ({ children }) => {
@@ -63,7 +72,6 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
-  console.log("isItemEditable", isItemEditable);
 
   useEffect(() => {
     const newCartCount = cartItems.reduce(

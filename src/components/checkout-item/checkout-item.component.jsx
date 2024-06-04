@@ -9,12 +9,14 @@ const CheckOutItem = ({ cartItem }) => {
     addItemToCart,
     removeItemFromCart,
     deleteItemFromCart,
-    /* isEditable,setIsEditable */ isItemEditable,
+    isItemEditable,
     setIsItemEditable,
   } = useContext(CartContext);
   const RemoveHandler = () => deleteItemFromCart(cartItem);
   const addItemHandler = () => addItemToCart(cartItem);
   const removeItemHandler = () => removeItemFromCart(cartItem);
+
+  console.log("isItemEditable",isItemEditable)
 
   return (
     <div className="checkout-item-container">
@@ -31,11 +33,11 @@ const CheckOutItem = ({ cartItem }) => {
           onClick={() =>
             setIsItemEditable((prev) => ({
               ...prev,
-              [id]: quantity,
+              [id]: true,
             }))
           }
         >
-          {isItemEditable[id] ? <QuantityUpdate id={id}/> : quantity}
+          {isItemEditable[id] ? <QuantityUpdate id={id} currentQuantity={quantity}/> : quantity}
         </span>
         <div className="arrow" onClick={addItemHandler}>
           &#10095;
