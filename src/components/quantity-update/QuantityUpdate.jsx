@@ -36,12 +36,19 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
     
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleQuantityUpdate();
+    }
+  };
+
 
   return (
     <div className="quantity-update-container">
       <input
         type="text"
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         value={quantity}
         pattern="\d*"
         maxLength="2"
