@@ -16,7 +16,13 @@ const CheckOutItem = ({ cartItem }) => {
   const addItemHandler = () => addItemToCart(cartItem);
   const removeItemHandler = () => removeItemFromCart(cartItem);
 
-  console.log("isItemEditable",isItemEditable)
+  const handleEditQuantity = () => {
+    setIsItemEditable((prev) => ({
+      ...prev,
+      [id]: true,
+    }))
+  }
+  
 
   return (
     <div className="checkout-item-container">
@@ -28,17 +34,12 @@ const CheckOutItem = ({ cartItem }) => {
         <div className="arrow" onClick={removeItemHandler}>
           &#10094;
         </div>
-        <span
-          className="value"
-          onClick={() =>
-            setIsItemEditable((prev) => ({
-              ...prev,
-              [id]: true,
-            }))
-          }
-        >
-          {isItemEditable[id] ? <QuantityUpdate id={id} currentQuantity={quantity}/> : quantity}
-        </span>
+         
+          {isItemEditable[id] ? <QuantityUpdate id={id} currentQuantity={quantity} /> :<span
+            className="value"
+            onClick={handleEditQuantity}
+          > {quantity} </span>}
+        
         <div className="arrow" onClick={addItemHandler}>
           &#10095;
         </div>

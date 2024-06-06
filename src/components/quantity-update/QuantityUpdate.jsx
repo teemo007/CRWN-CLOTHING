@@ -3,11 +3,10 @@ import { CartContext } from "../../contexts/cart.context";
 import "./quantity-update.styles.scss";
 
 const QuantityUpdate = ({ id, currentQuantity }) => {
-  // const { setIsItemEditable, updateItemQuantityFromCart,isItemEditable } =
-  //   useContext(CartContext);
+
   const {setIsItemEditable,updateItemQuantityFromCart} = useContext(CartContext)
   const [quantity, setQuantity] = useState(currentQuantity);
-  console.log("quantity123",quantity)
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -26,11 +25,15 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
   const handleQuantityUpdate = () => {
     // Similar validation logic as handleBlur
     
-    // if (!isNaN(quantity) && quantity >= 0) {
-    //   updateItemQuantityFromCart(id, parseInt(quantity, 10));
-    // }
-    // setIsItemEditable((prev) => ({ ...prev, [id]: false }));
-    alert("open update button")
+     if (!isNaN(quantity) && quantity >= 0) {
+       updateItemQuantityFromCart(id, parseInt(quantity, 10));
+     }
+     setIsItemEditable((prev) => {
+      const newProducts = {...prev}
+      delete newProducts[id]
+      return newProducts
+     });
+    
   };
 
 
@@ -39,7 +42,6 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
       <input
         type="text"
         onChange={handleChange}
-        //onClick={handleBlur}
         value={quantity}
         pattern="\d*"
         maxLength="2"
