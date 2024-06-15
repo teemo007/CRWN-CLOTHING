@@ -28,4 +28,27 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 `;
 
+export const SignOutContainer = styled.div`
+  align-items: center;
+  display:flex;
+  
+`
+export const UserIcon = styled.div`
+  background: black;
+  color:white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; 
+  text-transform: uppercase;
+  &:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+`
+
 
