@@ -1,7 +1,7 @@
-import "./signIn.styles.scss";
+import {SigninContainer} from "./signIn.styles.jsx";
 import FormInput from "../form-input/FormInput";
 import { useContext, useState } from "react";
-import Button from "../button/button.component";
+import Button, {BUTTON_TYPES_CLASSES} from "../button/button.component";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -41,7 +41,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="sign-in-container">
+    <SigninContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -70,12 +70,12 @@ const SignIn = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
+          <Button type="button" buttonType={BUTTON_TYPES_CLASSES.google} onClick={signInWithGoogle}>
             Google Sign in
           </Button>
         </div>
       </form>
-    </div>
+    </SigninContainer>
   );
 };
 

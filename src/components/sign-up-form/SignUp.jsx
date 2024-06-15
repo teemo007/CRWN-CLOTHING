@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import "./SignUp.styles.scss";
+import { useState } from "react";
+import {SignupContainer} from "./SignUp.styles.jsx";
 
 const defaultFormFields = {
   displayName: "",
@@ -50,7 +50,7 @@ const SignUp = () => {
     setFormFields({ ...formFields, [name]: value });
   };
   return (
-    <div className="sign-up-container">
+    <SignupContainer>
       <h2>Dont't have an account?</h2>
       <span>Sign Up with your email and password</span>
       <form action="." onSubmit={handleSubmit}>
@@ -103,7 +103,7 @@ const SignUp = () => {
         />
         <Button >SIGN UP</Button>
       </form>
-    </div>
+    </SignupContainer>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "./checkout-item.styles.scss";
+import {CheckoutItemContainer,ImageContainer,BaseSpan,Quantity,Arrow,Value,RemoveButton} from"./checkout-item.styles.jsx";
 import { CartContext } from "../../contexts/cart.context";
 import QuantityUpdate from "../quantity-update/QuantityUpdate";
 
@@ -20,35 +20,37 @@ const CheckOutItem = ({ cartItem }) => {
     setIsItemEditable((prev) => ({
       ...prev,
       [id]: true,
-    }))
-  }
-  
+    }));
+  };
 
   return (
-    <div className="checkout-item-container">
-      <div className="image-container">
+    <CheckoutItemContainer>
+      <ImageContainer>
         <img src={imageUrl} alt={`${name}`} />
-      </div>
-      <span className="name">{name}</span>
-      <span className="quantity">
-        <div className="arrow" onClick={removeItemHandler}>
+      </ImageContainer>
+      <BaseSpan>{name}</BaseSpan>
+      <Quantity>
+        <Arrow onClick={removeItemHandler}>
           &#10094;
-        </div>
-         
-          {isItemEditable[id] ? <QuantityUpdate id={id} currentQuantity={quantity} /> :<span
-            className="value"
-            onClick={handleEditQuantity}
-          > {quantity} </span>}
-        
-        <div className="arrow" onClick={addItemHandler}>
+        </Arrow>
+
+        {isItemEditable[id] ? (
+          <QuantityUpdate id={id} currentQuantity={quantity} />
+        ) : (
+          <Value onClick={handleEditQuantity}>
+            {quantity}
+          </Value>
+        )}
+
+        <Arrow onClick={addItemHandler}>
           &#10095;
-        </div>
-      </span>
-      <span className="price">${price}</span>
-      <div className="remove-button" onClick={RemoveHandler}>
+        </Arrow>
+      </Quantity>
+      <BaseSpan>${price}</BaseSpan>
+      <RemoveButton onClick={RemoveHandler}>
         &#10005;
-      </div>
-    </div>
+      </RemoveButton>
+    </CheckoutItemContainer>
   );
 };
 

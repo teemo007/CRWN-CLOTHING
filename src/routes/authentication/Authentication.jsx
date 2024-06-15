@@ -1,6 +1,6 @@
 import SignUp from "../../components/sign-up-form/SignUp";
 import SignIn from "../../components/sign-in-form/SignIn";
-import "./authentication.styles.scss"
+import { AuthenticationContainer } from "./authentication.styles.jsx";
 
 const Authentication = () => {
   // useEffect(() => {
@@ -16,13 +16,13 @@ const Authentication = () => {
   // }, []);
 
   return (
-    <div className="authentication-container">
+    <AuthenticationContainer>
       {/* <button onClick={logGoolgeUser}>
         <h1>Sign in with Google Popup</h1>
       </button> */}
-      <SignIn className="flex-item-left"/>
-      <SignUp className="flex-item-right"/>
-    </div>
+      <SignIn />
+      <SignUp />
+    </AuthenticationContainer>
   );
 };
 

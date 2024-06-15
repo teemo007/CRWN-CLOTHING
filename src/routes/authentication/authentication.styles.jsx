@@ -1,0 +1,13 @@
+import styled from "styled-components";
+
+export const AuthenticationContainer = styled.div`
+  display: flex;
+  width: 900px;
+  justify-content: space-between;
+  margin: 30px auto;
+  @media (max-width: 800px) {
+    flex-direction: column;
+    margin: 30px 30px;
+    width: 100%;
+  }
+`;

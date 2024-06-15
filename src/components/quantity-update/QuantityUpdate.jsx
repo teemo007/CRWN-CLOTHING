@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef,useEffect } from "react";
 import { CartContext } from "../../contexts/cart.context";
-import "./quantity-update.styles.scss";
+import {/* QuantityButton, */QuantityUpdateContainer,QuantityInput} from"./quantity-update.styles.jsx";
+import Button,{BUTTON_TYPES_CLASSES} from "../button/button.component.jsx";
 
 const QuantityUpdate = ({ id, currentQuantity }) => {
 
@@ -44,21 +45,20 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
 
 
   return (
-    <div className="quantity-update-container">
-      <input
+    <QuantityUpdateContainer>
+      <QuantityInput
         type="text"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         value={quantity}
         pattern="\d*"
         maxLength="2"
-        className="quantity-input"
         ref={inputRef}
       />
-      <button onClick={handleQuantityUpdate} className="update-button">
+      <Button buttonType={BUTTON_TYPES_CLASSES.update} onClick={handleQuantityUpdate}>
         Update
-      </button>
-    </div>
+      </Button>
+    </QuantityUpdateContainer>
   );
 };
 
