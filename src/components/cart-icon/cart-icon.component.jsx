@@ -3,7 +3,7 @@ import {
   ItemCount,
   ShoppingSvg
 } from "./cart-icon.styles.jsx";
-import ShoppingIcon from "../../assets/shopping-bag.svg?react";
+// import ShoppingIcon from "../../assets/shopping-bag.svg?react";
 import { useContext } from "react";
 import { CartContext } from "../../contexts/cart.context";
 

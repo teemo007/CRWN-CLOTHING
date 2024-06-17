@@ -10,7 +10,6 @@ import Cartdropdown from "../../components/cart-dropdown/cart-dropdown.component
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
-  console.log(currentUser)
   const {isCartOpen} = useContext(CartContext)
   return (
     <>
