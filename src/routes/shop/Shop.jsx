@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils.js";
-import { setCategories } from "../../store/categories/category.action.js";
+import { fetchCategoriesAsync } from "../../store/categories/category.action.js";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Category from "../category/category.component.jsx";
@@ -13,7 +13,7 @@ const Shop = () => {
     const getCategoriesMap = async () => {
       const categoriesArray = await getCategoriesAndDocuments('categories');
 
-      dispatch(setCategories(categoriesArray));
+      dispatch(fetchCategoriesAsync(categoriesArray));
     };
     getCategoriesMap();
   }, []);

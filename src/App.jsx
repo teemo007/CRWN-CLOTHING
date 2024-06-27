@@ -5,10 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Navigation from "./routes/navigation/Navigation.jsx";
 import Authentication from "./routes/authentication/Authentication.jsx";
-import { CartProvider } from "./contexts/cart.context.jsx";
 import Shop from "./routes/shop/Shop.jsx";
 import CheckOut from "./routes/checkout/checkout.component.jsx";
-import Category from "./routes/category/category.component.jsx";
+
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,

@@ -29,16 +29,20 @@ const CheckOutItem = ({ cartItem }) => {
   const isItemEditable = useSelector(selectIsItemEditable);
 
   const RemoveHandler = () => dispatch(deleteItemFromCart(cartItems, cartItem));
-  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+  const addItemHandler = () => {
+    if (quantity < 99) {
+      return dispatch(addItemToCart(cartItems, cartItem));
+    }
+  };
   const removeItemHandler = () =>
     dispatch(removeItemFromCart(cartItems, cartItem));
 
   const handleEditQuantity = () =>
     dispatch(
-      setIsItemEditable( {
+      setIsItemEditable({
         ...isItemEditable,
         [id]: true,
-      } )
+      })
     );
 
   return (

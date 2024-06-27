@@ -38,9 +38,15 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
     }
   };
 
-  const handleQuantityUpdate = () => {
-    // Similar validation logic as handleBlur
+  const handleOnBlur = (e) => {
+    const { value } = e.target;
+    if(value.length === 0) {
+      setQuantity(currentQuantity)
+    }
+  }
 
+
+  const handleQuantityUpdate = () => {
     if (!isNaN(quantity) && quantity >= 0) {
       dispatch(
         updateItemQuantityFromCart(cartItems, id, parseInt(quantity, 10))
@@ -53,7 +59,7 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && quantity.length > 0) {
       handleQuantityUpdate();
     }
   };
@@ -68,13 +74,16 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
         pattern="\d*"
         maxLength="2"
         ref={inputRef}
+        onBlur={handleOnBlur}
       />
-      <Button
+      {quantity.toString().length > 0 ? (
+        <Button
         buttonType={BUTTON_TYPES_CLASSES.update}
         onClick={handleQuantityUpdate}
       >
         Update
       </Button>
+      ) : ''}
     </QuantityUpdateContainer>
   );
 };
