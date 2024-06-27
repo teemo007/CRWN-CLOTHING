@@ -1,11 +1,26 @@
-import React, { useState, useContext, useRef,useEffect } from "react";
-import { CartContext } from "../../contexts/cart.context";
-import {/* QuantityButton, */QuantityUpdateContainer,QuantityInput} from"./quantity-update.styles.jsx";
-import Button,{BUTTON_TYPES_CLASSES} from "../button/button.component.jsx";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  /* QuantityButton, */ QuantityUpdateContainer,
+  QuantityInput,
+} from "./quantity-update.styles.jsx";
+import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsItemEditable,
+  updateItemQuantityFromCart,
+} from "../../store/cart/cart.action.js";
+import {
+  selectCartItems,
+  selectIsItemEditable,
+} from "../../store/cart/cart.selector.js";
 
 const QuantityUpdate = ({ id, currentQuantity }) => {
+  const dispatch = useDispatch();
 
-  const {setIsItemEditable,updateItemQuantityFromCart} = useContext(CartContext)
+  const ItemEditable = useSelector(selectIsItemEditable);
+
+  const cartItems = useSelector(selectCartItems);
+
   const [quantity, setQuantity] = useState(currentQuantity);
 
   const inputRef = useRef(null);
@@ -25,16 +40,16 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
 
   const handleQuantityUpdate = () => {
     // Similar validation logic as handleBlur
-    
-     if (!isNaN(quantity) && quantity >= 0) {
-       updateItemQuantityFromCart(id, parseInt(quantity, 10));
-     }
-     setIsItemEditable((prev) => {
-      const newProducts = {...prev}
-      delete newProducts[id]
-      return newProducts
-     });
-    
+
+    if (!isNaN(quantity) && quantity >= 0) {
+      dispatch(
+        updateItemQuantityFromCart(cartItems, id, parseInt(quantity, 10))
+      );
+    }
+    const newEditableItems = { ...ItemEditable };
+    delete newEditableItems[id];
+
+    dispatch(setIsItemEditable(newEditableItems));
   };
 
   const handleKeyDown = (e) => {
@@ -42,7 +57,6 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
       handleQuantityUpdate();
     }
   };
-
 
   return (
     <QuantityUpdateContainer>
@@ -55,7 +69,10 @@ const QuantityUpdate = ({ id, currentQuantity }) => {
         maxLength="2"
         ref={inputRef}
       />
-      <Button buttonType={BUTTON_TYPES_CLASSES.update} onClick={handleQuantityUpdate}>
+      <Button
+        buttonType={BUTTON_TYPES_CLASSES.update}
+        onClick={handleQuantityUpdate}
+      >
         Update
       </Button>
     </QuantityUpdateContainer>

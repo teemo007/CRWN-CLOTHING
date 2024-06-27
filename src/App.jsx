@@ -35,10 +35,8 @@ const App = () => {
     {
       element: (
         <>
-          <CartProvider>
-            <Navigation />
-            <Outlet />
-          </CartProvider>
+          <Navigation />
+          <Outlet />
         </>
       ),
       children: [

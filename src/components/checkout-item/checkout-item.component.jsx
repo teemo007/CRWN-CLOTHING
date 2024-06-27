@@ -1,27 +1,45 @@
-import { useContext } from "react";
-import {CheckoutItemContainer,ImageContainer,BaseSpan,Quantity,Arrow,Value,RemoveButton} from"./checkout-item.styles.jsx";
-import { CartContext } from "../../contexts/cart.context";
+import {
+  CheckoutItemContainer,
+  ImageContainer,
+  BaseSpan,
+  Quantity,
+  Arrow,
+  Value,
+  RemoveButton,
+} from "./checkout-item.styles.jsx";
+
 import QuantityUpdate from "../quantity-update/QuantityUpdate";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCartItems,
+  selectIsItemEditable,
+} from "../../store/cart/cart.selector.js";
+import {
+  addItemToCart,
+  deleteItemFromCart,
+  removeItemFromCart,
+  setIsItemEditable,
+} from "../../store/cart/cart.action.js";
 
 const CheckOutItem = ({ cartItem }) => {
-  const { id, name, imageUrl, price, quantity } = cartItem;
-  const {
-    addItemToCart,
-    removeItemFromCart,
-    deleteItemFromCart,
-    isItemEditable,
-    setIsItemEditable,
-  } = useContext(CartContext);
-  const RemoveHandler = () => deleteItemFromCart(cartItem);
-  const addItemHandler = () => addItemToCart(cartItem);
-  const removeItemHandler = () => removeItemFromCart(cartItem);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
 
-  const handleEditQuantity = () => {
-    setIsItemEditable((prev) => ({
-      ...prev,
-      [id]: true,
-    }));
-  };
+  const { id, name, imageUrl, price, quantity } = cartItem;
+  const isItemEditable = useSelector(selectIsItemEditable);
+
+  const RemoveHandler = () => dispatch(deleteItemFromCart(cartItems, cartItem));
+  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+  const removeItemHandler = () =>
+    dispatch(removeItemFromCart(cartItems, cartItem));
+
+  const handleEditQuantity = () =>
+    dispatch(
+      setIsItemEditable( {
+        ...isItemEditable,
+        [id]: true,
+      } )
+    );
 
   return (
     <CheckoutItemContainer>
@@ -30,26 +48,18 @@ const CheckOutItem = ({ cartItem }) => {
       </ImageContainer>
       <BaseSpan>{name}</BaseSpan>
       <Quantity>
-        <Arrow onClick={removeItemHandler}>
-          &#10094;
-        </Arrow>
+        <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
 
         {isItemEditable[id] ? (
           <QuantityUpdate id={id} currentQuantity={quantity} />
         ) : (
-          <Value onClick={handleEditQuantity}>
-            {quantity}
-          </Value>
+          <Value onClick={handleEditQuantity}>{quantity}</Value>
         )}
 
-        <Arrow onClick={addItemHandler}>
-          &#10095;
-        </Arrow>
+        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
       </Quantity>
       <BaseSpan>${price}</BaseSpan>
-      <RemoveButton onClick={RemoveHandler}>
-        &#10005;
-      </RemoveButton>
+      <RemoveButton onClick={RemoveHandler}>&#10005;</RemoveButton>
     </CheckoutItemContainer>
   );
 };
