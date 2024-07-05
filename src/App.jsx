@@ -8,12 +8,6 @@ import Authentication from "./routes/authentication/Authentication.jsx";
 import Shop from "./routes/shop/Shop.jsx";
 import CheckOut from "./routes/checkout/checkout.component.jsx";
 
-import {
-  createUserDocumentFromAuth,
-  getCurrentUser,
-  onAuthStateChangedListener,
-} from "./utils/firebase/firebase.utils.js";
-
 import { checkUserSession } from "./store/user/user.action";
 
 const App = () => {

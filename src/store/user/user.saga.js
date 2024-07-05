@@ -1,17 +1,24 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import { USER_ACTION_TYPES } from "./user.types";
-import { signInSuccess, signInFailed } from "./user.action";
+import { signInSuccess, signInFailed, signUpFailed, signUpSuccess } from "./user.action";
 import {
+  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   getCurrentUser,
   signInAuathWithEmailAndPassword,
   signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
+import { notification } from 'antd';
 
 export function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
   try {
     const userSnapshot = yield call(createUserDocumentFromAuth, userAuth, additionalDetails);
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+    // notification.success({
+    //   message: 'Welcome',
+    //   description: `${userSnapshot.data().displayName}`,
+    //   showProgress: true,
+    // });
   } catch (error) {
     yield put(signInFailed(error));
   }
@@ -26,7 +33,7 @@ export function* signInWithGoogle() {
   }
 }
 
-export function* signInwithEmail({ payload: { email, password } }) {
+export function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield call(
       signInAuathWithEmailAndPassword,
@@ -37,6 +44,36 @@ export function* signInwithEmail({ payload: { email, password } }) {
   } catch (error) {
     yield put(signInFailed(error));
   }
+}
+
+export function* signUp({ payload: { email, password,displayName } }) {
+  try {
+    const { user } = yield call(createAuthUserWithEmailAndPassword,email,password)
+    yield put(signUpSuccess(user,{displayName}))
+    // notification.success({
+    //   message: 'Sign Up Successfully',
+    //   description: `${displayName}`,
+    //   showProgress: true,
+    // });
+  } catch (error) {
+    yield put(signUpFailed(error))
+    if (error.code === "auth/email-already-in-use") {
+      // notification.error({
+      //   message: 'SignUp Failed',
+      //   description: 'Cannot create user, email already in use',
+      //   showProgress: true,
+      // });
+    } else {
+      // notification.error({
+      //   message: 'Error',
+      //   description: error.message,
+      // });
+    }
+  }
+}
+
+export function* signInAfterSignUp({payload:{user, additionalDetails}}) {
+  yield call(getSnapshotFromUserAuth, user, additionalDetails)
 }
 
 export function* isUserAuthenticated() {
@@ -54,7 +91,15 @@ export function* onGoogleSignInStart() {
 }
 
 export function* onEmailSignInStart() {
-  yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInwithEmail);
+  yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInWithEmail);
+}
+
+export function* onSignUpStart() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp)
+}
+
+export function* onSignUpSuccess() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp)
 }
 
 export function* onCheckUserSession() {
@@ -66,5 +111,7 @@ export function* userSaga() {
     call(onCheckUserSession),
     call(onGoogleSignInStart),
     call(onEmailSignInStart),
+    call(onSignUpStart),
+    call(onSignUpSuccess)
   ]);
 }

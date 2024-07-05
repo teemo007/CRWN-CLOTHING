@@ -17,6 +17,7 @@ import { selectIsCartOpen } from "../../store/cart/cart.selector";
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen)
+  console.log("currentUser",currentUser)
   return (
     <>
       <NavigationContainer>
@@ -28,7 +29,7 @@ const Navigation = () => {
 
           {currentUser ? (
             <SignOutContainer>
-              <UserIcon>{currentUser.email.charAt(0)}</UserIcon>
+              <UserIcon>{currentUser.email?.charAt(0)}</UserIcon>
               <NavLink as="span" onClick={signOutUser}>
                 SIGN OUT
               </NavLink>
