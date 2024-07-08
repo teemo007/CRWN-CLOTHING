@@ -8,16 +8,21 @@ import {
 } from "./navigation.styles";
 import CrwnLogo from "../../assets/crown.svg?react";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
 import Cartdropdown from "../../components/cart-dropdown/cart-dropdown.components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/user/user.action";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen)
+  const dispatch = useDispatch();
   console.log("currentUser",currentUser)
+
+  const handleSignOut = () => {
+    dispatch(signOutStart())
+  }
   return (
     <>
       <NavigationContainer>
@@ -30,7 +35,7 @@ const Navigation = () => {
           {currentUser ? (
             <SignOutContainer>
               <UserIcon>{currentUser.email?.charAt(0)}</UserIcon>
-              <NavLink as="span" onClick={signOutUser}>
+              <NavLink as="span" onClick={handleSignOut}>
                 SIGN OUT
               </NavLink>
             </SignOutContainer>
