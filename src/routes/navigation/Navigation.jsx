@@ -18,7 +18,6 @@ const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen)
   const dispatch = useDispatch();
-  console.log("currentUser",currentUser)
 
   const handleSignOut = () => {
     dispatch(signOutStart())
