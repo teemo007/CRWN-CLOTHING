@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export const checkoutReducer = (state = INITIAL_STATE, action) => {
+export const paymentReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -13,6 +13,7 @@ export const checkoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isProcessingPayment: true,
+        error: null,
       };
     case PAYMENT_ACTION_TYPE.PAYMENT_SUCCESS:
       return {

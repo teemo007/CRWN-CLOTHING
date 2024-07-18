@@ -1,9 +1,10 @@
-import { createAction } from "@reduxjs/toolkit";
-import { CHECKOUT_ACTION_TYPE } from "./payment.types";
+import { createAction } from "../../utils/reducer/reducer.utils";
+import { PAYMENT_ACTION_TYPE } from "./payment.types";
 
-export const checkoutStart = (amount) =>
-  createAction(CHECKOUT_ACTION_TYPE.CHECKOUT_START,amount);
-export const checkoutSuccess = () =>
-  createAction(CHECKOUT_ACTION_TYPE.CHECKOUT_SUCCESS);
-export const checkoutFailed = (error) =>
-  createAction(CHECKOUT_ACTION_TYPE.CHECKOUT_FAILED, error);
+export const paymentStart = (paymentData) => {
+  return createAction(PAYMENT_ACTION_TYPE.PAYMENT_START, paymentData);
+};
+export const paymentSuccess = () =>
+  createAction(PAYMENT_ACTION_TYPE.PAYMENT_SUCCESS);
+export const paymentFailed = (error) =>
+  createAction(PAYMENT_ACTION_TYPE.PAYMENT_FAILED, error);
