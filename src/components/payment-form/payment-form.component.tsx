@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { paymentStart } from "../../store/payment/payment.action";
 import { selectPaymentIsProcessingPayment } from "../../store/payment/payment.selector";
+import { FormEvent } from "react";
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -17,7 +18,7 @@ const PaymentForm = () => {
   const amount = useSelector(selectCartTotal);
   const isProcessingPayment = useSelector(selectPaymentIsProcessingPayment);
 
-  const paymentHandler = (e) => {
+  const paymentHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!stripe || !elements) {
       return;

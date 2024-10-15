@@ -9,8 +9,8 @@ import {
 import {
   selectCartItems,
   selectCartTotal,
-} from "../../store/cart/cart.selector.js";
-import PaymentForm from "../../components/payment-form/payment-form.component.jsx";
+} from "../../store/cart/cart.selector.ts";
+import PaymentForm from "../../components/payment-form/payment-form.component.tsx";
 
 const CheckOut = () => {
   const cartItems = useSelector(selectCartItems);

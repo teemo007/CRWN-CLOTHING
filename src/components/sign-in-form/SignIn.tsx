@@ -1,7 +1,7 @@
 import { SigninContainer } from "./signIn.styles.jsx";
-import FormInput from "../form-input/FormInput";
-import { useState } from "react";
-import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component";
+import FormInput from "../form-input/FormInput.js";
+import { useState, FormEvent, ChangeEvent } from "react";
+import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component.js";
 import { useDispatch } from "react-redux";
 import {
   emailSignInStart,
@@ -23,18 +23,22 @@ const SignIn = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      dispatch(emailSignInStart(email,password));
+      dispatch(emailSignInStart(email, password));
       setFormFields(defaultFormFields);
     } catch (error) {
-      console.log(error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log("An unknown error occurred");
+      }
     }
   };
 
@@ -45,26 +49,23 @@ const SignIn = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
-          inputOptions={{
-            type: "email",
-            id: "signInEmail",
-            name: "email",
-            required: true,
-            value: email,
-            onChange: handleChange,
-          }}
+          type="email"
+          id="signInEmail"
+          name="email"
+          required
+          value={email}
+          onChange={handleChange}
         />
         <FormInput
           label="Password"
-          inputOptions={{
-            type: "password",
-            id: "signInPassword",
-            name: "password",
-            required: true,
-            value: password,
-            onChange: handleChange,
-          }}
+          type="password"
+          id="signInPassword"
+          name="password"
+          required
+          value={password}
+          onChange={handleChange}
         />
+
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
           <Button

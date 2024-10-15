@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import Navigation from "./routes/navigation/Navigation.jsx";
+import Navigation from "./routes/navigation/Navigation";
 import Authentication from "./routes/authentication/Authentication.jsx";
 import Shop from "./routes/shop/Shop.jsx";
 import CheckOut from "./routes/checkout/checkout.component.jsx";

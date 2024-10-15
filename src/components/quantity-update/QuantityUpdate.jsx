@@ -3,16 +3,16 @@ import {
   /* QuantityButton, */ QuantityUpdateContainer,
   QuantityInput,
 } from "./quantity-update.styles.jsx";
-import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component.jsx";
+import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsItemEditable,
   updateItemQuantityFromCart,
-} from "../../store/cart/cart.action.js";
+} from "../../store/cart/cart.action.ts";
 import {
   selectCartItems,
   selectIsItemEditable,
-} from "../../store/cart/cart.selector.js";
+} from "../../store/cart/cart.selector.ts";
 
 const QuantityUpdate = ({ id, currentQuantity }) => {
   const dispatch = useDispatch();

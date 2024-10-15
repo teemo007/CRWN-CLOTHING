@@ -13,13 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectCartItems,
   selectIsItemEditable,
-} from "../../store/cart/cart.selector.js";
+} from "../../store/cart/cart.selector.ts";
 import {
   addItemToCart,
   deleteItemFromCart,
   removeItemFromCart,
   setIsItemEditable,
-} from "../../store/cart/cart.action.js";
+} from "../../store/cart/cart.action.ts";
 
 const CheckOutItem = ({ cartItem }) => {
   const dispatch = useDispatch();

@@ -3,8 +3,8 @@ import CategoriesPreview from "../categories-preview/categories-preview.componen
 // import { fetchCategoriesAsync } from "../../store/categories/category.action.js";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import Category from "../category/category.component.jsx";
-import { fetchCateGoriesStart } from "../../store/categories/category.action.js";
+import Category from "../category/category.component.tsx";
+import { fetchCateGoriesStart } from "../../store/categories/category.action.ts";
 
 const Shop = () => {
   const dispatch = useDispatch();

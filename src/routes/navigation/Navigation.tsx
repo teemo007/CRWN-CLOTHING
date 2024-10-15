@@ -34,7 +34,7 @@ const Navigation = () => {
           {currentUser ? (
             <SignOutContainer>
               <UserIcon>{currentUser.email?.charAt(0)}</UserIcon>
-              <NavLink as="span" onClick={handleSignOut}>
+              <NavLink as="span" to="/" onClick={handleSignOut}>
                 SIGN OUT
               </NavLink>
             </SignOutContainer>

@@ -1,6 +1,16 @@
-import { takeLatest, put, all, call } from "typed-redux-saga/macro"; //essentially leverage babel macro plugin
+import { takeLatest, put, call, all } from "typed-redux-saga"; //essentially leverage babel macro plugin
 import { USER_ACTION_TYPES } from "./user.types";
-import { signInSuccess, signInFailed, signUpFailed, signUpSuccess, signOutSuccess, signOutFailed,EmailSignInStart,SignUpStart } from "./user.action";
+import {
+  signInSuccess,
+  signInFailed,
+  signUpFailed,
+  signUpSuccess,
+  signOutSuccess,
+  signOutFailed,
+  EmailSignInStart,
+  SignUpStart,
+  SignUpSuccess,
+} from "./user.action";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -11,14 +21,22 @@ import {
   AdditionalInformation,
 } from "../../utils/firebase/firebase.utils";
 
-import {User} from 'firebase/auth'
+import { User } from "firebase/auth";
 
-
-export function* getSnapshotFromUserAuth(userAuth:User, additionalDetails?:AdditionalInformation) {
+export function* getSnapshotFromUserAuth(
+  userAuth: User,
+  additionalDetails?: AdditionalInformation
+) {
   try {
-    const userSnapshot = yield* call(createUserDocumentFromAuth, userAuth, additionalDetails);
-    if(userSnapshot){
-      yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+    const userSnapshot = yield* call(
+      createUserDocumentFromAuth,
+      userAuth,
+      additionalDetails
+    );
+    if (userSnapshot) {
+      yield* put(
+        signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() })
+      );
     }
 
     // notification.success({
@@ -40,65 +58,62 @@ export function* signInWithGoogle() {
   }
 }
 
-export function* signInWithEmail({ payload: { email, password } }: EmailSignInStart) {
+export function* signInWithEmail({
+  payload: { email, password },
+}: EmailSignInStart) {
   try {
     const useCredential = yield* call(
       signInAuathWithEmailAndPassword,
       email,
       password
     );
-    if(useCredential){
-      const {user} = useCredential
+    if (useCredential) {
+      const { user } = useCredential;
       yield* call(getSnapshotFromUserAuth, user);
     }
-    
   } catch (error) {
     yield* put(signInFailed(error as Error));
   }
 }
 
-export function* signUp({ payload: { email, password,displayName } }: SignUpStart) {
+export function* signUp({
+  payload: { email, password, displayName },
+}: SignUpStart) {
   try {
-    const UserCredential = yield* call(createAuthUserWithEmailAndPassword,email,password)
+    const UserCredential = yield* call(
+      createAuthUserWithEmailAndPassword,
+      email,
+      password
+    );
 
-    if(UserCredential){
-      const {user} = UserCredential
-      yield* put(signUpSuccess(user,{displayName}))
+    if (UserCredential) {
+      const { user } = UserCredential;
+      yield* put(signUpSuccess(user, { displayName }));
     }
-    
+
     // notification.success({
     //   message: 'Sign Up Successfully',
     //   description: `${displayName}`,
     //   showProgress: true,
     // });
   } catch (error) {
-    yield* put(signUpFailed(error))
-    if (error.code === "auth/email-already-in-use") {
-      // notification.error({
-      //   message: 'SignUp Failed',
-      //   description: 'Cannot create user, email already in use',
-      //   showProgress: true,
-      // });
-    } else {
-      // notification.error({
-      //   message: 'Error',
-      //   description: error.message,
-      // });
-    }
+    yield* put(signUpFailed(error as Error));
   }
 }
 
 export function* signOut() {
-    try {
-        yield* call(signOutUser)
-        yield* put(signOutSuccess())
-    } catch (error) {
-        yield* put(signOutFailed(error))
-    }
+  try {
+    yield* call(signOutUser);
+    yield* put(signOutSuccess());
+  } catch (error) {
+    yield* put(signOutFailed(error as Error));
+  }
 }
 
-export function* signInAfterSignUp({payload:{user, additionalDetails}}) {
-  yield* call(getSnapshotFromUserAuth, user, additionalDetails)
+export function* signInAfterSignUp({
+  payload: { user, additionalDetails },
+}: SignUpSuccess) {
+  yield* call(getSnapshotFromUserAuth, user, additionalDetails);
 }
 
 export function* isUserAuthenticated() {
@@ -107,7 +122,7 @@ export function* isUserAuthenticated() {
     if (!userAuth) return;
     yield* call(getSnapshotFromUserAuth, userAuth);
   } catch (error) {
-    yield* put(signInFailed(error));
+    yield* put(signInFailed(error as Error));
   }
 }
 
@@ -120,15 +135,15 @@ export function* onEmailSignInStart() {
 }
 
 export function* onSignUpStart() {
-  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp)
+  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp);
 }
 
 export function* onSignUpSuccess() {
-  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp)
+  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
 export function* onSignOutStart() {
-    yield* takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut)
+  yield* takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut);
 }
 
 export function* onCheckUserSession() {
@@ -142,6 +157,6 @@ export function* userSaga() {
     call(onEmailSignInStart),
     call(onSignUpStart),
     call(onSignUpSuccess),
-    call(onSignOutStart)
+    call(onSignOutStart),
   ]);
 }
