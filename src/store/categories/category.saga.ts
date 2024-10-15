@@ -1,4 +1,4 @@
-import {takeLatest, all, call, put} from 'redux-saga/effects'
+import {takeLatest, all, call, put} from 'typed-redux-saga'
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils"
 import { fetchCateGoriesSuccess, fetchCateGoriesFailed } from './category.action';
 import { CATEGORIES_ACTION_TYPE } from './category.types';
@@ -6,11 +6,11 @@ import { CATEGORIES_ACTION_TYPE } from './category.types';
 export function* fetchCategoriesAsync() {
     //the generator is actually the basis for async await. use `yield`
     try { // anywhere you have a fuction and you want to turn it into an effect, you use the `call` keyword
-        const categoruesArry = yield call(getCategoriesAndDocuments,'categories');
-        yield put(fetchCateGoriesSuccess(categoruesArry))
+        const categoruesArry = yield* call(getCategoriesAndDocuments    );
+        yield* put(fetchCateGoriesSuccess(categoruesArry))
         // dispatch( fetchCateGoriesSuccess(categoruesArry))
     } catch (error) {
-        yield put(fetchCateGoriesFailed(error))
+        yield* put(fetchCateGoriesFailed(error as Error))
         // dispatch(fetchCateGoriesFailed(error))
     }
 }
