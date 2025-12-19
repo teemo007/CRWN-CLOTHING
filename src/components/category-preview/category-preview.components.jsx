@@ -1,9 +1,12 @@
-import {CategoryPreviewContainer,Preview,Title} from "./category-preview.styles.jsx";
+import {
+  CategoryPreviewContainer,
+  Preview,
+  Title,
+} from "./category-preview.styles.jsx";
 
 import ProductCard from "../product-card/ProductCard";
 
 const CategoryPreview = ({ title, products }) => {
-
   return (
     <CategoryPreviewContainer>
       <h2>

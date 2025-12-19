@@ -31,7 +31,20 @@
     "styled-components": "^6.1.11",
     "typed-redux-saga": "1.4.0",
     "vite-plugin-svgr": "^4.2.0",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "web-vitals": "2.1.4",
+    "workbox-background-sync": "^6.5.3",
+    "workbox-broadcast-update": "^6.5.3",
+    "workbox-cacheable-response": "^6.5.3",
+    "workbox-core": "^6.5.3",
+    "workbox-expiration": "^6.5.3",
+    "workbox-google-analytics": "^6.5.3",
+    "workbox-navigation-preload": "^6.5.3",
+    "workbox-precaching": "^6.5.3",
+    "workbox-range-requests": "^6.5.3",
+    "workbox-routing": "^6.5.3",
+    "workbox-strategies": "^6.5.3",
+    "workbox-streams": "^6.5.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

@@ -23,7 +23,7 @@ export const Body = styled.div`
   h2 {
     font-weight: bold;
     margin: 0 6px 0;
-    font-size:22px;
+    font-size: 22px;
     color: #4a4a4a;
     text-transform: uppercase;
   }
@@ -65,4 +65,7 @@ export const DirectoryItemContainer = styled.div`
       opacity: 0.9;
     }
   }
-`
+  @media screen and (max-width: 800px) {
+    width:200px;
+  }
+`;
