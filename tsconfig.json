@@ -17,6 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
+    "types": ["vitest/globals"],
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/setupTests.ts"]
 }
